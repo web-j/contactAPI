@@ -37,8 +37,8 @@ public class ContactBO implements IContactBO<Contact> {
     }
 
     @Override
-    public void delete(Contact contact) {
-        contactDAO.delete(contact);
+    public void delete(int id) {
+        contactDAO.delete(id);
     }
 
 }

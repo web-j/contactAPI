@@ -3,6 +3,7 @@ package com.contact.contact.Controller;
 import com.contact.contact.BO.IContactBO;
 import com.contact.contact.Model.Contact;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.AfterDomainEventPublication;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,6 +12,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/contact")
+@CrossOrigin
 public class ContactController {
 
     @Autowired
@@ -37,8 +39,8 @@ public class ContactController {
         contactBO.update(contact);
     }
 
-    @DeleteMapping
-    public void delete(@RequestBody Contact contact) {
-        contactBO.delete(contact);
+    @DeleteMapping(value = "/{id}")
+    public void delete(@PathVariable("id") int id) {
+        contactBO.delete(id);
     }
 }

@@ -7,7 +7,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Component
 @Transactional
@@ -39,8 +38,8 @@ public class ContactDAO implements IContactDAO<Contact> {
     }
 
     @Override
-    public void delete(Contact contact) {
-        contactR = this.entityManager.find(Contact.class, contact.getId());
+    public void delete(int id) {
+        contactR = this.entityManager.find(Contact.class, id);
         this.entityManager.remove(contactR);
     }
 }
