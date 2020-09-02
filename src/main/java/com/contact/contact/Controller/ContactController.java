@@ -14,21 +14,31 @@ import java.util.Optional;
 public class ContactController {
 
     @Autowired
-    private IContactBO service;
-
-    @GetMapping
-    public Collection<Contact> getAll() {
-        return service.getAllContact();
-    }
+    private IContactBO contactBO;
 
     @GetMapping(value = "/{id}")
     public Optional<Contact> getId(@PathVariable("id") int id) {
-        return service.getContactId(id);
+        return contactBO.get(id);
+    }
+
+    @GetMapping
+    public Collection<Contact> getAll() {
+        return contactBO.getAll();
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public int create(@RequestBody Contact contact) {
-        return service.saveContact(contact);
+    public void create(@RequestBody Contact contact) {
+        contactBO.save(contact);
+    }
+
+    @PutMapping
+    public void update(@RequestBody Contact contact) {
+        contactBO.update(contact);
+    }
+
+    @DeleteMapping
+    public void delete(@RequestBody Contact contact) {
+        contactBO.delete(contact);
     }
 }

@@ -6,7 +6,7 @@ import java.util.Optional;
 public interface IContactDAO<T> {
     Optional<T> get(int id);
     Collection<T> getAll();
-    int save(T t);
+    void save(T t);
     void update(T t);
     void delete(T t);
 }

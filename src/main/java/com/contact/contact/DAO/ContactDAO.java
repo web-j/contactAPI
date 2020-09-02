@@ -3,41 +3,44 @@ package com.contact.contact.DAO;
 import com.contact.contact.Model.Contact;
 import org.springframework.stereotype.Component;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.transaction.Transactional;
 import java.util.*;
 import java.util.stream.Collectors;
 
 @Component
+@Transactional
 public class ContactDAO implements IContactDAO<Contact> {
 
-    private List<Contact> contactList = new ArrayList<>();
+    private Contact contactR = new Contact();
+
+    @PersistenceContext
+    private EntityManager entityManager;
 
     @Override
     public Optional<Contact> get(int id) {
-        return  Optional.ofNullable(contactList.get(id));
+        return  Optional.ofNullable(this.entityManager.find(Contact.class, id));
     }
 
     @Override
     public Collection<Contact> getAll() {
-        return contactList.stream()
-                .filter(Objects::nonNull)
-                .collect(Collectors.collectingAndThen(Collectors.toList(), Collections::unmodifiableList));
+        return this.entityManager.createQuery("SELECT a FROM Contact a", Contact.class).getResultList();
     }
 
     @Override
-    public int save(Contact contact) {
-        contactList.add(contact);
-        int index = contactList.size() - 1;
-        contact.setId(index);
-        return index;
+    public void save(Contact contact) {
+        this.entityManager.persist(contact);
     }
 
     @Override
     public void update(Contact contact) {
-        contactList.set(contact.getId(), contact);
+        this.entityManager.merge(contact);
     }
 
     @Override
     public void delete(Contact contact) {
-        contactList.set(contact.getId(), null);
+        contactR = this.entityManager.find(Contact.class, contact.getId());
+        this.entityManager.remove(contactR);
     }
 }

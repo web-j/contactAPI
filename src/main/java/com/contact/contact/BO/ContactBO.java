@@ -15,18 +15,30 @@ public class ContactBO implements IContactBO<Contact> {
 
     @Autowired
     private IContactDAO<Contact> contactDAO;
-    private Contact contact = new Contact();
 
-    public Optional<Contact> getContactId(int id) {
+    @Override
+    public Optional<Contact> get(int id) {
         return contactDAO.get(id);
     }
 
-    public Collection<Contact> getAllContact() {
+    @Override
+    public Collection<Contact> getAll() {
         return contactDAO.getAll();
     }
 
-    public int saveContact(Contact contact) {
-        return contactDAO.save(contact);
+    @Override
+    public void save(Contact contact) {
+        contactDAO.save(contact);
+    }
+
+    @Override
+    public void update(Contact contact) {
+        contactDAO.update(contact);
+    }
+
+    @Override
+    public void delete(Contact contact) {
+        contactDAO.delete(contact);
     }
 
 }

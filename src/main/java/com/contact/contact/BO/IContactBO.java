@@ -4,7 +4,9 @@ import java.util.Collection;
 import java.util.Optional;
 
 public interface IContactBO<T> {
-    Optional<T> getContactId(int id);
-    Collection<T> getAllContact();
-    int saveContact(T t);
+    Optional<T> get(int id);
+    Collection<T> getAll();
+    void save(T t);
+    void update(T t);
+    void delete(T t);
 }
